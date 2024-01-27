@@ -1,8 +1,15 @@
-const { DLMSTranslatorUtilsWrapper } = require('dlmsTranslator');
+const addon = require('../build/Release/dlms_translator_utils_extension');
+const DLMSTranslatorUtils = addon.DLMSTranslatorUtilsWrapper;
 
-let dlmsTranslator = new DLMSTranslatorUtilsWrapper();
-let systemTitle = dlmsTranslator.getSystemTitle();
-console.log(systemTitle);
+
+// Create an instance of your addon class
+const translatorUtils = new DLMSTranslatorUtils();
+
+// Call the SetSystemTitle function
+translatorUtils.SetSystemTitle(systemTitle);
+
+console.log('System title set to:', systemTitle);
+
 
 // const assert = require("assert");
 

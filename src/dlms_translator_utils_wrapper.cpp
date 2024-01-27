@@ -121,4 +121,4 @@ Napi::Object InitAll(Napi::Env env, Napi::Object exports) {
 
 // ... Implement other methods similarly ...
 
-NODE_API_MODULE(dlms_translator_utils_extension, InitAll)
+NODE_API_MODULE(addon, InitAll)

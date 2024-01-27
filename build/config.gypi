@@ -413,16 +413,6 @@
     "want_separate_host_toolset": 0,
     "nodedir": "/home/legend/.cache/node-gyp/21.6.1",
     "python": "/usr/bin/python3",
-    "standalone_static_library": 1,
-    "user_agent": "npm/10.2.4 node/v21.6.1 linux x64 workspaces/false",
-    "userconfig": "/home/legend/.npmrc",
-    "local_prefix": "/home/legend/Documents/node_addon_api",
-    "prefix": "/home/legend/.nvm/versions/node/v21.6.1",
-    "npm_version": "10.2.4",
-    "cache": "/home/legend/.npm",
-    "node_gyp": "/home/legend/.nvm/versions/node/v21.6.1/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js",
-    "globalconfig": "/home/legend/.nvm/versions/node/v21.6.1/etc/npmrc",
-    "init_module": "/home/legend/.npm-init.js",
-    "global_prefix": "/home/legend/.nvm/versions/node/v21.6.1"
+    "standalone_static_library": 1
   }
 }
