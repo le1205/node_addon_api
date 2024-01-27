@@ -35,7 +35,7 @@ Napi::Object DLMSTranslatorUtilsWrapper::Init(Napi::Env env, Napi::Object export
     InstanceMethod("getSystemTitle", &DLMSTranslatorUtilsWrapper::GetSystemTitle),
     InstanceMethod("setSystemTitle", &DLMSTranslatorUtilsWrapper::SetSystemTitle),
     InstanceMethod("decryptPdu", &DLMSTranslatorUtilsWrapper::DecryptPdu),
-    InstanceMethod("encryptPdu", &DLMSTranslatorUtilsWrapper::EncryptPdu),
+    // InstanceMethod("encryptPdu", &DLMSTranslatorUtilsWrapper::EncryptPdu),
     // ... other method bindings
   });
 
@@ -76,36 +76,43 @@ Napi::Value DLMSTranslatorUtilsWrapper::DecryptPdu(const Napi::CallbackInfo& inf
   Napi::Env env = info.Env();
   Napi::HandleScope scope(env);
 
-  // if (info.Length() < 1 || !info[0].IsString()) {
-  //   Napi::TypeError::New(env, "String expected").ThrowAsJavaScriptException();
-  //   return -1;
-  // }
+  // Check for correct number of arguments and types
+  if (info.Length() < 3 || !info[0].IsString() || !info[1].IsString() || !info[2].IsBoolean()) {
+    Napi::TypeError::New(env, "String, String and Boolean expected").ThrowAsJavaScriptException();
+    return env.Null();
+  }
 
   std::string data = info[0].As<Napi::String>().Utf8Value();
   std::string output = info[1].As<Napi::String>().Utf8Value();
+  bool addSpaces = info[2].As<Napi::Boolean>().Value();
 
-  translator.DecryptPdu((char*)data.c_str(), output);
+  int result = translator.DecryptPdu(data.c_str(), output, addSpaces);
 
-  return Napi::String::New(env, (char*)data.c_str());
+  // Return an object containing the result and output
+  Napi::Object resultObj = Napi::Object::New(env);
+  resultObj.Set("status", Napi::Number::New(env, result));
+  resultObj.Set("output", Napi::String::New(env, output));
+
+  return resultObj;
 }
 
-// EncryptPdu
-Napi::Value DLMSTranslatorUtilsWrapper::EncryptPdu(const Napi::CallbackInfo& info) {
-  Napi::Env env = info.Env();
-  Napi::HandleScope scope(env);
+// // EncryptPdu
+// Napi::Value DLMSTranslatorUtilsWrapper::EncryptPdu(const Napi::CallbackInfo& info) {
+//   Napi::Env env = info.Env();
+//   Napi::HandleScope scope(env);
 
-  // if (info.Length() < 1 || !info[0].IsString()) {
-  //   Napi::TypeError::New(env, "String expected").ThrowAsJavaScriptException();
-  //   return -1;
-  // }
+//   // if (info.Length() < 1 || !info[0].IsString()) {
+//   //   Napi::TypeError::New(env, "String expected").ThrowAsJavaScriptException();
+//   //   return -1;
+//   // }
 
-  std::string data = info[0].As<Napi::String>().Utf8Value();
-  std::string output = info[1].As<Napi::String>().Utf8Value();
+//   std::string data = info[0].As<Napi::String>().Utf8Value();
+//   std::string output = info[1].As<Napi::String>().Utf8Value();
 
-  translator.EecryptPdu((char*)data.c_str(), output);
+//   translator.EecryptPdu((char*)data.c_str(), output);
 
-  return Napi::String::New(env, (char*)data.c_str());
-}
+//   return Napi::String::New(env, (char*)data.c_str());
+// }
 
 
 Napi::Object InitAll(Napi::Env env, Napi::Object exports) {
