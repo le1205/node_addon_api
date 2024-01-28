@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "~/.node-gyp/21.6.1/include/node",
+                "${workspaceFolder}/node_modules/node-addon-api",
+                "${workspaceFolder}/src/DLMS-Translator/inc",
+                "/home/legend/.nvm/versions/node/v21.6.1/include/node",
+                "/usr/include/libxml2"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
