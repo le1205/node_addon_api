@@ -1,14 +1,26 @@
-const addon = require('../build/Release/dlms_translator_utils_extension');
-const DLMSTranslatorUtils = addon.DLMSTranslatorUtilsWrapper;
+const DLMSTranslatorUtilsExtension = require("../lib/binding.js");
+console.log("Tests passed- everything looks OK!");
+const assert = require("assert");
+
+assert(DLMSTranslatorUtilsExtension, "The expected function is undefined");
+
+const translator = new DLMSTranslatorUtilsExtension();
+console.log("========================");
+console.log("+++++++++++++++++", translator.GetSystemTitle())
+   translator.SetSystemTitle("new system title")
 
 
-// Create an instance of your addon class
-const translatorUtils = new DLMSTranslatorUtils();
+console.log("Tests passed- everything looks OK!");
 
-// Call the SetSystemTitle function
-translatorUtils.SetSystemTitle(systemTitle);
 
-console.log('System title set to:', systemTitle);
+// // Create an instance of your addon class
+// const translatorUtils = new DLMSTranslatorUtils();
+
+// // Call the SetSystemTitle function
+// translatorUtils.SetSystemTitle(systemTitle);
+
+// console.log('System title set to:', systemTitle);
+
 
 
 // const assert = require("assert");

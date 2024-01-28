@@ -10,9 +10,9 @@ class DLMSTranslatorUtilsWrapper : public Napi::ObjectWrap<DLMSTranslatorUtilsWr
   Napi::Value GetSystemTitle(const Napi::CallbackInfo& info);
   void SetSystemTitle(const Napi::CallbackInfo& info);
   Napi::Value DecryptPdu(const Napi::CallbackInfo& info);
-  Napi::Value encryptPdu(const Napi::CallbackInfo& info);
-  int PduToXml(const Napi::CallbackInfo& info);
-  int XmlToPdu(const Napi::CallbackInfo& info);
+  Napi::Value EncryptPdu(const Napi::CallbackInfo& info);
+  Napi::Value PduToXml(const Napi::CallbackInfo& info);
+  Napi::Value XmlToPdu(const Napi::CallbackInfo& info);
   
 
  private:
@@ -35,7 +35,9 @@ Napi::Object DLMSTranslatorUtilsWrapper::Init(Napi::Env env, Napi::Object export
     InstanceMethod("getSystemTitle", &DLMSTranslatorUtilsWrapper::GetSystemTitle),
     InstanceMethod("setSystemTitle", &DLMSTranslatorUtilsWrapper::SetSystemTitle),
     InstanceMethod("decryptPdu", &DLMSTranslatorUtilsWrapper::DecryptPdu),
-    // InstanceMethod("encryptPdu", &DLMSTranslatorUtilsWrapper::EncryptPdu),
+    InstanceMethod("encryptPdu", &DLMSTranslatorUtilsWrapper::EncryptPdu),
+    InstanceMethod("pduToXml", &DLMSTranslatorUtilsWrapper::PduToXml),
+    InstanceMethod("xmlToPdu", &DLMSTranslatorUtilsWrapper::XmlToPdu)
     // ... other method bindings
   });
 
@@ -96,24 +98,86 @@ Napi::Value DLMSTranslatorUtilsWrapper::DecryptPdu(const Napi::CallbackInfo& inf
   return resultObj;
 }
 
-// // EncryptPdu
-// Napi::Value DLMSTranslatorUtilsWrapper::EncryptPdu(const Napi::CallbackInfo& info) {
-//   Napi::Env env = info.Env();
-//   Napi::HandleScope scope(env);
+// EncryptPdu
+Napi::Value DLMSTranslatorUtilsWrapper::EncryptPdu(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
+  Napi::HandleScope scope(env);
 
-//   // if (info.Length() < 1 || !info[0].IsString()) {
-//   //   Napi::TypeError::New(env, "String expected").ThrowAsJavaScriptException();
-//   //   return -1;
-//   // }
+  // Check for the correct number of arguments and types
+  if (info.Length() < 3 || !info[0].IsString() || !info[1].IsString() || !info[2].IsBoolean()) {
+    Napi::TypeError::New(env, "String, String, and Boolean expected").ThrowAsJavaScriptException();
+    return env.Null();
+  }
 
-//   std::string data = info[0].As<Napi::String>().Utf8Value();
-//   std::string output = info[1].As<Napi::String>().Utf8Value();
+  std::string data = info[0].As<Napi::String>().Utf8Value();
+  std::string output; // Output will be set by EncryptPdu function
+  bool addSpaces = info[2].As<Napi::Boolean>().Value();
 
-//   translator.EecryptPdu((char*)data.c_str(), output);
+  // Call EncryptPdu function
+  int result = translator.EncryptPdu(data.c_str(), output, addSpaces);
 
-//   return Napi::String::New(env, (char*)data.c_str());
-// }
+  // Return an object containing the result and output
+  Napi::Object resultObj = Napi::Object::New(env);
+  resultObj.Set("status", Napi::Number::New(env, result));
+  resultObj.Set("output", Napi::String::New(env, output));
 
+  return resultObj;
+}
+
+// XmlToPdu
+Napi::Value DLMSTranslatorUtilsWrapper::XmlToPdu(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
+  Napi::HandleScope scope(env);
+
+  // Check for the correct number of arguments and types
+  if (info.Length() < 3 || !info[0].IsString() || !info[1].IsString() || !info[2].IsBoolean()) {
+    Napi::TypeError::New(env, "String, String, and Boolean expected").ThrowAsJavaScriptException();
+    return env.Null();
+  }
+
+  std::string data = info[0].As<Napi::String>().Utf8Value();
+  std::string output; // Output will be set by XmlToPdu function
+  bool addSpaces = info[2].As<Napi::Boolean>().Value();
+
+  // Call XmlToPdu function
+  int result = translator.XmlToPdu(data.c_str(), output, addSpaces);
+
+  // Return an object containing the result and output
+  Napi::Object resultObj = Napi::Object::New(env);
+  resultObj.Set("status", Napi::Number::New(env, result));
+  resultObj.Set("output", Napi::String::New(env, output));
+
+  return resultObj;
+}
+
+// Call PDU function
+Napi::Value DLMSTranslatorUtilsWrapper::PduToXml(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
+  Napi::HandleScope scope(env);
+
+  // Check the number and type of arguments
+  if (info.Length() < 1 || !info[0].IsString()) {
+    Napi::TypeError::New(env, "String expected").ThrowAsJavaScriptException();
+    return env.Null(); // Return null in case of an error
+  }
+
+  std::string data = info[0].As<Napi::String>().Utf8Value();
+  std::string output; // This will store the XML output
+
+  // Call the PduToXml function and get the result
+  int result = translator.PduToXml(data.c_str(), output);
+
+  // Create a JavaScript object to hold the result and output
+  Napi::Object resultObj = Napi::Object::New(env);
+  resultObj.Set("status", Napi::Number::New(env, result));
+  resultObj.Set("output", Napi::String::New(env, output));
+
+  // Return the result object
+  return resultObj;
+}
+
+
+//
 
 Napi::Object InitAll(Napi::Env env, Napi::Object exports) {
   return DLMSTranslatorUtilsWrapper::Init(env, exports);
