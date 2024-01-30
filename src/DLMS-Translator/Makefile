@@ -8,7 +8,7 @@ TARGET_OBJ = test
 CC       = g++
 LIBS += -lgurux_dlms -lxml2
 LDFLAGS += -L$(LIB)
-CFLAGS += -Wall -g -I$(INC) -I/usr/include/libxml2
+CFLAGS += -Wall -g -I$(INC) -I/usr/include/libxml2 -L/lib/x86_64-linux-gnu
 rm       = rm -f
 
 objs := $(patsubst $(SRC)%.cpp,$(OBJ)%.o,$(wildcard $(SRC)/*.cpp))

@@ -1,6 +1,6 @@
-cmd_Release/obj.target/dlms_translator_utils_extension/src/dlms_translator_utils_wrapper.o := g++ -o Release/obj.target/dlms_translator_utils_extension/src/dlms_translator_utils_wrapper.o ../src/dlms_translator_utils_wrapper.cpp '-DNODE_GYP_MODULE_NAME=dlms_translator_utils_extension' '-DUSING_UV_SHARED=1' '-DUSING_V8_SHARED=1' '-DV8_DEPRECATION_WARNINGS=1' '-D_GLIBCXX_USE_CXX11_ABI=1' '-D_LARGEFILE_SOURCE' '-D_FILE_OFFSET_BITS=64' '-D__STDC_FORMAT_MACROS' '-DOPENSSL_NO_PINSHARED' '-DOPENSSL_THREADS' '-DBUILDING_NODE_EXTENSION' -I/home/legend/.cache/node-gyp/21.6.1/include/node -I/home/legend/.cache/node-gyp/21.6.1/src -I/home/legend/.cache/node-gyp/21.6.1/deps/openssl/config -I/home/legend/.cache/node-gyp/21.6.1/deps/openssl/openssl/include -I/home/legend/.cache/node-gyp/21.6.1/deps/uv/include -I/home/legend/.cache/node-gyp/21.6.1/deps/zlib -I/home/legend/.cache/node-gyp/21.6.1/deps/v8/include -I/home/legend/Documents/node_addon_api/node_modules/node-addon-api -I../src/DLMS-Translator/inc -I/usr/include/libxml2  -fPIC -pthread -Wall -Wextra -Wno-unused-parameter -m64 -O3 -fno-omit-frame-pointer -fno-rtti -std=gnu++17 -MMD -MF ./Release/.deps/Release/obj.target/dlms_translator_utils_extension/src/dlms_translator_utils_wrapper.o.d.raw   -c
-Release/obj.target/dlms_translator_utils_extension/src/dlms_translator_utils_wrapper.o: \
- ../src/dlms_translator_utils_wrapper.cpp \
+cmd_Release/obj.target/dlms_translator_utils_extension/dlms_translator_utils_wrapper.o := g++ -o Release/obj.target/dlms_translator_utils_extension/dlms_translator_utils_wrapper.o ../dlms_translator_utils_wrapper.cpp '-DNODE_GYP_MODULE_NAME=dlms_translator_utils_extension' '-DUSING_UV_SHARED=1' '-DUSING_V8_SHARED=1' '-DV8_DEPRECATION_WARNINGS=1' '-D_GLIBCXX_USE_CXX11_ABI=1' '-D_LARGEFILE_SOURCE' '-D_FILE_OFFSET_BITS=64' '-D__STDC_FORMAT_MACROS' '-DOPENSSL_NO_PINSHARED' '-DOPENSSL_THREADS' '-DBUILDING_NODE_EXTENSION' -I/home/legend/.cache/node-gyp/21.6.1/include/node -I/home/legend/.cache/node-gyp/21.6.1/src -I/home/legend/.cache/node-gyp/21.6.1/deps/openssl/config -I/home/legend/.cache/node-gyp/21.6.1/deps/openssl/openssl/include -I/home/legend/.cache/node-gyp/21.6.1/deps/uv/include -I/home/legend/.cache/node-gyp/21.6.1/deps/zlib -I/home/legend/.cache/node-gyp/21.6.1/deps/v8/include -I/home/legend/Documents/node_addon_api/node_modules/node-addon-api -I../src/DLMS-Translator/inc -I/usr/include/libxml2  -fPIC -pthread -Wall -Wextra -Wno-unused-parameter -m64 -O3 -fno-omit-frame-pointer -fno-rtti -std=gnu++17 -MMD -MF ./Release/.deps/Release/obj.target/dlms_translator_utils_extension/dlms_translator_utils_wrapper.o.d.raw   -c
+Release/obj.target/dlms_translator_utils_extension/dlms_translator_utils_wrapper.o: \
+ ../dlms_translator_utils_wrapper.cpp \
  /home/legend/Documents/node_addon_api/node_modules/node-addon-api/napi.h \
  /home/legend/.cache/node-gyp/21.6.1/include/node/node_api.h \
  /home/legend/.cache/node-gyp/21.6.1/include/node/js_native_api.h \
@@ -57,7 +57,7 @@ Release/obj.target/dlms_translator_utils_extension/src/dlms_translator_utils_wra
  /usr/include/libxml2/libxml/xlink.h \
  /usr/include/libxml2/libxml/xmlmemory.h \
  /usr/include/libxml2/libxml/threads.h
-../src/dlms_translator_utils_wrapper.cpp:
+../dlms_translator_utils_wrapper.cpp:
 /home/legend/Documents/node_addon_api/node_modules/node-addon-api/napi.h:
 /home/legend/.cache/node-gyp/21.6.1/include/node/node_api.h:
 /home/legend/.cache/node-gyp/21.6.1/include/node/js_native_api.h:

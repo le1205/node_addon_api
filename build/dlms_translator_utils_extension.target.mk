@@ -93,7 +93,7 @@ INCS_Release := \
 	-I/usr/include/libxml2
 
 OBJS := \
-	$(obj).target/$(TARGET)/src/dlms_translator_utils_wrapper.o
+	$(obj).target/$(TARGET)/dlms_translator_utils_wrapper.o
 
 # Add to the list of files we specially track dependencies for.
 all_deps += $(OBJS)
@@ -132,7 +132,9 @@ LDFLAGS_Release := \
 	-rdynamic \
 	-m64
 
-LIBS :=
+LIBS := \
+	-L /home/legend/Documents/node_addon_api/src/lib -lgurux_dlms \
+	-lxml2
 
 $(obj).target/dlms_translator_utils_extension.node: GYP_LDFLAGS := $(LDFLAGS_$(BUILDTYPE))
 $(obj).target/dlms_translator_utils_extension.node: LIBS := $(LIBS)

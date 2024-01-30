@@ -6,8 +6,8 @@ assert(DLMSTranslatorUtilsExtension, "The expected function is undefined");
 
 const translator = new DLMSTranslatorUtilsExtension();
 console.log("========================");
-console.log("+++++++++++++++++", translator.GetSystemTitle())
-   translator.SetSystemTitle("new system title")
+translator.getSystemTitle("new system title")
+console.log("+++++++++++++++++", translator.getSystemTitle("new system title"))
 
 
 console.log("Tests passed- everything looks OK!");

@@ -13,16 +13,13 @@ class DLMSTranslatorUtilsWrapper : public Napi::ObjectWrap<DLMSTranslatorUtilsWr
   Napi::Value EncryptPdu(const Napi::CallbackInfo& info);
   Napi::Value PduToXml(const Napi::CallbackInfo& info);
   Napi::Value XmlToPdu(const Napi::CallbackInfo& info);
-  
 
  private:
   static Napi::FunctionReference constructor;
   DLMSTranslatorUtils translator;
-  // ... other private members and methods
 };
 
 Napi::FunctionReference DLMSTranslatorUtilsWrapper::constructor;
-
 // Constructor implementation
 DLMSTranslatorUtilsWrapper::DLMSTranslatorUtilsWrapper(const Napi::CallbackInfo& info) : Napi::ObjectWrap<DLMSTranslatorUtilsWrapper>(info) {
   // Constructor logic...
