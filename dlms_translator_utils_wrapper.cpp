@@ -9,6 +9,10 @@ class DLMSTranslatorUtilsWrapper : public Napi::ObjectWrap<DLMSTranslatorUtilsWr
   // Public methods
   Napi::Value GetSystemTitle(const Napi::CallbackInfo& info);
   void SetSystemTitle(const Napi::CallbackInfo& info);
+  Napi::Value GetBlockCipherKey(const Napi::CallbackInfo& info);
+  void SetBlockCipherKey(const Napi::CallbackInfo& info);
+  Napi::Value GetAuthenticationKey(const Napi::CallbackInfo& info);
+  void SetAuthenticationKey(const Napi::CallbackInfo& info);
   Napi::Value DecryptPdu(const Napi::CallbackInfo& info);
   Napi::Value EncryptPdu(const Napi::CallbackInfo& info);
   Napi::Value PduToXml(const Napi::CallbackInfo& info);
@@ -31,6 +35,10 @@ Napi::Object DLMSTranslatorUtilsWrapper::Init(Napi::Env env, Napi::Object export
   Napi::Function func = DefineClass(env, "DLMSTranslatorUtilsWrapper", {
     InstanceMethod("getSystemTitle", &DLMSTranslatorUtilsWrapper::GetSystemTitle),
     InstanceMethod("setSystemTitle", &DLMSTranslatorUtilsWrapper::SetSystemTitle),
+    InstanceMethod("getBlockCipherKey", &DLMSTranslatorUtilsWrapper::GetBlockCipherKey),
+    InstanceMethod("setBlockCipherKey", &DLMSTranslatorUtilsWrapper::SetBlockCipherKey),
+    InstanceMethod("getAuthenticationKey", &DLMSTranslatorUtilsWrapper::GetAuthenticationKey),
+    InstanceMethod("setAuthenticationKey", &DLMSTranslatorUtilsWrapper::SetAuthenticationKey),
     InstanceMethod("decryptPdu", &DLMSTranslatorUtilsWrapper::DecryptPdu),
     InstanceMethod("encryptPdu", &DLMSTranslatorUtilsWrapper::EncryptPdu),
     InstanceMethod("pduToXml", &DLMSTranslatorUtilsWrapper::PduToXml),
@@ -47,13 +55,16 @@ Napi::Object DLMSTranslatorUtilsWrapper::Init(Napi::Env env, Napi::Object export
 
 // GetSystemTitle method implementation
 Napi::Value DLMSTranslatorUtilsWrapper::GetSystemTitle(const Napi::CallbackInfo& info) {
-  Napi::Env env = info.Env();
-  Napi::HandleScope scope(env);
+    Napi::Env env = info.Env();
+    Napi::HandleScope scope(env);
 
-  // Call the C++ method
-  const char* result = translator.GetSystemTitle();
+    // Call the standalone function
+    std::string title = translator.GetSystemTitle();
 
-  return Napi::String::New(env, result);
+    // Convert the std::string to a const char*
+    const char* result = title.c_str();
+
+    return Napi::String::New(env, result);
 }
 
 // SetSystemTitle method implementation
@@ -69,6 +80,64 @@ void DLMSTranslatorUtilsWrapper::SetSystemTitle(const Napi::CallbackInfo& info) 
   std::string systemTitle = info[0].As<Napi::String>().Utf8Value();
   translator.SetSystemTitle((char*)systemTitle.c_str());
 }
+
+// SetBlockCipherKey method implementation
+void DLMSTranslatorUtilsWrapper::SetBlockCipherKey(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
+  Napi::HandleScope scope(env);
+
+  if (info.Length() < 1 || !info[0].IsString()) {
+    Napi::TypeError::New(env, "String expected").ThrowAsJavaScriptException();
+    return;
+  }
+
+  std::string setBlockCipherKey = info[0].As<Napi::String>().Utf8Value();
+  translator.SetBlockCipherKey((char*)setBlockCipherKey.c_str());
+}
+
+// GetBlockCipherKey method implementation
+Napi::Value DLMSTranslatorUtilsWrapper::GetBlockCipherKey(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    Napi::HandleScope scope(env);
+
+    // Call the standalone function
+    std::string title = translator.GetBlockCipherKey();
+
+    // Convert the std::string to a const char*
+    const char* result = title.c_str();
+
+    return Napi::String::New(env, result);
+}
+
+// SetAuthenticationKey method implementation
+void DLMSTranslatorUtilsWrapper::SetAuthenticationKey(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
+  Napi::HandleScope scope(env);
+
+  if (info.Length() < 1 || !info[0].IsString()) {
+    Napi::TypeError::New(env, "String expected").ThrowAsJavaScriptException();
+    return;
+  }
+
+  std::string SetAuthenticationKey = info[0].As<Napi::String>().Utf8Value();
+  translator.SetAuthenticationKey((char*)SetAuthenticationKey.c_str());
+}
+
+// GetAuthenticationKey method implementation
+Napi::Value DLMSTranslatorUtilsWrapper::GetAuthenticationKey(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    Napi::HandleScope scope(env);
+
+    // Call the standalone function
+    std::string title = translator.GetAuthenticationKey();
+
+    // Convert the std::string to a const char*
+    const char* result = title.c_str();
+
+    return Napi::String::New(env, result);
+}
+
+
 
 // DecryptPdu
 Napi::Value DLMSTranslatorUtilsWrapper::DecryptPdu(const Napi::CallbackInfo& info) {

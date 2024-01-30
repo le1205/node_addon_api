@@ -11,7 +11,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#include "../inc/DLMSTranslatorUtils.h"
+#include "DLMSTranslatorUtils.h"
 
 int main(int argc, char **argv) {
     char systemTitle[] = "3435014090152003";

@@ -4,8 +4,8 @@ const assert = require("assert");
 
 assert(DLMSTranslatorUtilsExtension, "The expected function is undefined");
 const translator = new DLMSTranslatorUtilsExtension();
-translator.setSystemTitle("new system title")
-console.log("+++++++++++++++++", translator.getSystemTitle("new system title"))
+translator.setSystemTitle("0937182202")
+// console.log("+++++++++++++++++", translator.getSystemTitle());
 // Replace these strings with actual test data
 const testData = "testtestData";
 const testOutput = "testoutput";
@@ -26,12 +26,6 @@ try {
    console.error("An error occurred:", error);
  }
 
- try {
-   const result = translator.encryptPdu(testData, testOutput, addSpaces);
-   console.log("Decryption result:", result);
- } catch (error) {
-   console.error("An error occurred:", error);
- }
  try {
    const result = translator.pduToXml(testData);
    console.log("Conversion result:", result);

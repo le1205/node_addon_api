@@ -18,7 +18,7 @@ public:
 	/**
      * @return System title.
      */
-	const char *GetSystemTitle();
+    std::string GetSystemTitle(void);
 	/**
     *  @param value System title.
     */
@@ -27,7 +27,7 @@ public:
 	/**
      * @return Block cipher key.
      */
-	const char *GetBlockCipherKey();
+	std::string GetBlockCipherKey(void);
 	/**
     *  @param value Block cipher key.
     */
@@ -36,7 +36,7 @@ public:
 	/**
      * @return Authentication key.
      */
-	const char *GetAuthenticationKey();
+	std::string GetAuthenticationKey(void);
 	/**
      * @param value
      *            Authentication key.
