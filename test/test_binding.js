@@ -1,38 +1,57 @@
 const DLMSTranslatorUtilsExtension = require("../lib/binding.js");
-console.log("Tests passed- everything looks OK!");
+console.log("Tests start!");
 const assert = require("assert");
 
 assert(DLMSTranslatorUtilsExtension, "The expected function is undefined");
-console.log("============222222222222===========");
 const translator = new DLMSTranslatorUtilsExtension();
-console.log("========================");
-translator.getSystemTitle("new system title")
+translator.setSystemTitle("new system title")
 console.log("+++++++++++++++++", translator.getSystemTitle("new system title"))
+// Replace these strings with actual test data
+const testData = "testtestData";
+const testOutput = "testoutput";
+const xmlData = "your_xml_data_here";
+const addSpaces = true; // or false, depending on what you are testing
 
+try {
+   const result = translator.decryptPdu(testData, testOutput, addSpaces);
+   console.log("Decryption result:", result);
+ } catch (error) {
+   console.error("An error occurred:", error);
+ }
 
+ try {
+   const result = translator.encryptPdu(testData, testOutput, addSpaces);
+   console.log("Decryption result:", result);
+ } catch (error) {
+   console.error("An error occurred:", error);
+ }
+
+ try {
+   const result = translator.encryptPdu(testData, testOutput, addSpaces);
+   console.log("Decryption result:", result);
+ } catch (error) {
+   console.error("An error occurred:", error);
+ }
+ try {
+   const result = translator.pduToXml(testData);
+   console.log("Conversion result:", result);
+   if (result.status === 0) { // Assuming status 0 indicates success
+     console.log("XML Output:", result.output);
+   } else {
+     console.error("Conversion failed with status:", result.status);
+   }
+ } catch (error) {
+   console.error("An error occurred:", error);
+ }
+ try {
+   const result = translator.xmlToPdu(xmlData, "", addSpaces);
+   console.log("Conversion result:", result);
+   if (result.status === 0) { // Assuming status 0 indicates success
+     console.log("PDU Output:", result.output);
+   } else {
+     console.error("Conversion failed with status:", result.status);
+   }
+ } catch (error) {
+   console.error("An error occurred:", error);
+ }
 console.log("Tests passed- everything looks OK!");
-
-
-// // Create an instance of your addon class
-// const translatorUtils = new DLMSTranslatorUtils();
-
-// // Call the SetSystemTitle function
-// translatorUtils.SetSystemTitle(systemTitle);
-
-// console.log('System title set to:', systemTitle);
-
-
-
-// const assert = require("assert");
-
-// assert(getSystemTitle, "The expected function is undefined");
-
-// function testBasic()
-// {
-//     const result =  getSystemTitle("hello");
-//     assert.strictEqual(result, "world", "Unexpected value returned");
-// }
-
-// assert.doesNotThrow(testBasic, undefined, "testBasic threw an expection");
-
-// console.log("Tests passed- everything looks OK!");
