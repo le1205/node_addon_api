@@ -3,7 +3,7 @@ console.log("Tests passed- everything looks OK!");
 const assert = require("assert");
 
 assert(DLMSTranslatorUtilsExtension, "The expected function is undefined");
-
+console.log("============222222222222===========");
 const translator = new DLMSTranslatorUtilsExtension();
 console.log("========================");
 translator.getSystemTitle("new system title")
