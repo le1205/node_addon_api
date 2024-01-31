@@ -13,6 +13,15 @@ class DLMSTranslatorUtilsWrapper : public Napi::ObjectWrap<DLMSTranslatorUtilsWr
   void SetBlockCipherKey(const Napi::CallbackInfo& info);
   Napi::Value GetAuthenticationKey(const Napi::CallbackInfo& info);
   void SetAuthenticationKey(const Napi::CallbackInfo& info);
+  Napi::Value GetFrameCounter(const Napi::CallbackInfo& info);
+  void SetFrameCounter(const Napi::CallbackInfo& info);
+  Napi::Value GetSecuritySuite(const Napi::CallbackInfo& info);
+  void SetSecuritySuite(const Napi::CallbackInfo& info);
+  Napi::Value GetSecurity(const Napi::CallbackInfo& info);
+  void SetSecurity(const Napi::CallbackInfo& info);
+  Napi::Value GetAuthentication(const Napi::CallbackInfo& info);
+  void SetAuthentication(const Napi::CallbackInfo& info);
+  void AddWrapperFrame(const Napi::CallbackInfo& info);
   Napi::Value DecryptPdu(const Napi::CallbackInfo& info);
   Napi::Value EncryptPdu(const Napi::CallbackInfo& info);
   Napi::Value PduToXml(const Napi::CallbackInfo& info);
@@ -39,6 +48,13 @@ Napi::Object DLMSTranslatorUtilsWrapper::Init(Napi::Env env, Napi::Object export
     InstanceMethod("setBlockCipherKey", &DLMSTranslatorUtilsWrapper::SetBlockCipherKey),
     InstanceMethod("getAuthenticationKey", &DLMSTranslatorUtilsWrapper::GetAuthenticationKey),
     InstanceMethod("setAuthenticationKey", &DLMSTranslatorUtilsWrapper::SetAuthenticationKey),
+    InstanceMethod("getFrameCounter", &DLMSTranslatorUtilsWrapper::GetFrameCounter),
+    InstanceMethod("setFrameCounter", &DLMSTranslatorUtilsWrapper::SetFrameCounter),
+    InstanceMethod("getSecuritySuite", &DLMSTranslatorUtilsWrapper::GetSecuritySuite),
+    InstanceMethod("setSecuritySuite", &DLMSTranslatorUtilsWrapper::SetSecuritySuite),
+    InstanceMethod("getAuthentication", &DLMSTranslatorUtilsWrapper::GetAuthentication),
+    InstanceMethod("setAuthentication", &DLMSTranslatorUtilsWrapper::SetAuthentication),
+    InstanceMethod("addWrapperFrame", &DLMSTranslatorUtilsWrapper::AddWrapperFrame),
     InstanceMethod("decryptPdu", &DLMSTranslatorUtilsWrapper::DecryptPdu),
     InstanceMethod("encryptPdu", &DLMSTranslatorUtilsWrapper::EncryptPdu),
     InstanceMethod("pduToXml", &DLMSTranslatorUtilsWrapper::PduToXml),
@@ -135,6 +151,110 @@ Napi::Value DLMSTranslatorUtilsWrapper::GetAuthenticationKey(const Napi::Callbac
     const char* result = title.c_str();
 
     return Napi::String::New(env, result);
+}
+
+// SetFramerCounter method implementation
+void DLMSTranslatorUtilsWrapper::SetFrameCounter(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    Napi::HandleScope scope(env);
+
+    if (info.Length() < 1 || !info[0].IsNumber()) {
+        Napi::TypeError::New(env, "Number expected").ThrowAsJavaScriptException();
+        return;
+    }
+
+    unsigned long frameCounter = info[0].As<Napi::Number>().Uint32Value();
+    translator.SetFrameCounter(frameCounter);
+}
+
+// GetFrameCounter method implementation
+Napi::Value DLMSTranslatorUtilsWrapper::GetFrameCounter(const Napi::CallbackInfo& info) {
+      Napi::Env env = info.Env();
+      Napi::HandleScope scope(env);
+
+      // Call the GetFrameCounter method on the translator object
+      unsigned long frameCounter = translator.GetFrameCounter();
+
+      // Return the frameCounter as a Napi::Number
+      return Napi::Number::New(env, static_cast<double>(frameCounter));
+  }
+
+// SetSecuritySuite method implementation
+void DLMSTranslatorUtilsWrapper::SetSecuritySuite(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    Napi::HandleScope scope(env);
+
+    if (info.Length() < 1) {
+        Napi::TypeError::New(env, "expected").ThrowAsJavaScriptException();
+        return;
+    }
+
+    // Retrieve the argument as an unsigned char
+    unsigned char securitySuite = static_cast<unsigned char>(info[0].As<Napi::Number>().Uint32Value());
+    translator.SetSecuritySuite(securitySuite);
+}
+// GetSecuritySuite method implementation
+Napi::Value DLMSTranslatorUtilsWrapper::GetSecuritySuite(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    Napi::HandleScope scope(env);
+
+    // Call the GetSecuritySuite method on the translator object
+    unsigned char securitySuite = translator.GetSecuritySuite();
+
+    // Since unsigned char is a smaller integer type, it is safe to cast to a uint32_t.
+    return Napi::Number::New(env, static_cast<uint32_t>(securitySuite));
+}
+
+// SetSecurity method implementation
+void DLMSTranslatorUtilsWrapper::SetSecurity(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    Napi::HandleScope scope(env);
+
+    if (info.Length() < 1) {
+        Napi::TypeError::New(env, "expected").ThrowAsJavaScriptException();
+        return;
+    }
+
+    // Retrieve the argument as an unsigned char
+    unsigned char setSecurity = static_cast<unsigned char>(info[0].As<Napi::Number>().Uint32Value());
+    translator.SetSecurity(setSecurity);
+}
+// GetSecurity method implementation
+Napi::Value DLMSTranslatorUtilsWrapper::GetSecurity(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    Napi::HandleScope scope(env);
+
+    // Call the GetSecurity method on the translator object
+    unsigned char getSecurity = translator.GetSecurity();
+
+    // Since unsigned char is a smaller integer type, it is safe to cast to a uint32_t.
+    return Napi::Number::New(env, static_cast<uint32_t>(getSecurity));
+}
+
+// SetAuthentication method implementation
+void DLMSTranslatorUtilsWrapper::SetAuthentication(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    Napi::HandleScope scope(env);
+
+    if (info.Length() < 1) {
+        Napi::TypeError::New(env, "expected").ThrowAsJavaScriptException();
+        return;
+    }
+
+    // Retrieve the argument as an unsigned char
+    unsigned char setAuthentication = static_cast<unsigned char>(info[0].As<Napi::Number>().Uint32Value());
+    translator.SetAuthentication(setAuthentication);
+}
+// GetAuthentication method implementation
+Napi::Value DLMSTranslatorUtilsWrapper::GetAuthentication(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    Napi::HandleScope scope(env);
+
+    // Call the GetAuthentication method on the translator object
+    unsigned char getAuthentication = translator.GetAuthentication();
+
+    // Since unsigned char is a smaller integer type, it is safe to cast to a uint32_t.
+    return Napi::Number::New(env, static_cast<uint32_t>(getAuthentication));
 }
 
 
